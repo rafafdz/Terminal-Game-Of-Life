@@ -9,6 +9,7 @@ class Tablero:
 		self.pasos_esq = 3
 		self.filas_extra = [0,0] # Arriba, abajo
 		self.cols_extra = [0,0] # Izquierda, Derecha
+		self.base_random = [(x,y) for y in range(self.grid) for x in range(self.grid)]
 		self.gen = 0
 
 		# Genera matriz de grid x grid
@@ -31,23 +32,19 @@ class Tablero:
 		return output
 
 	def celula_en(self, cords):
-		cord_x_real = cords[0] + self.cols_extra[0]
-		cord_y_real = cords[1] + self.filas_extra[0]
-
-		largo_x = self.grid + self.cols_extra[0] + self.cols_extra[1]
-		largo_y = self.grid + self.filas_extra[0] + self.filas_extra[1]
-
-		if (cord_x_real < 0 or cord_y_real < 0 or 
-		cord_x_real >= largo_x or cord_y_real >= largo_y):
-			return None
-		else:
-			obj_encontrado = self.matriz[cord_y_real][cord_x_real] 
-			return obj_encontrado
+		x, y = cords[0], cords[1]
+		obj_encontrado = self.matriz[y][x] 
+		return obj_encontrado
 
 	def rellenar(self):
 		for y in range(self.grid):
 			for x in range(self.grid):
 				self.matriz[y][x] = Celula((x,y), self)
+
+	def randomizar(self, cantidad):
+		cords = sample(self.base_random, cantidad)
+		for cord in cords:
+			self.celula_en(cord).vida = True
 
 	def cargar_random(self, nombre, cantidad):
 		archivo = open(nombre, "r")
@@ -60,9 +57,8 @@ class Tablero:
 				break
 			cuenta_lineas += 1
 
-		self.celulas_vivas = cords.copy()
-		for cord in self.celulas_vivas:
-			self.celula_en(cord).vida = True
+		for cord in cords:
+			self.celula_en(cord).vida = True 
 		archivo.close()
 
 	def mirar(self, cord):
@@ -180,7 +176,6 @@ class Tablero_opt1(Tablero):
 		Tablero.__init__(self, grid)
 		self.celulas_vivas = []
 		self.contadas_alguna_vez = []
-		self.base_random = [(x,y) for y in range(self.grid) for x in range(self.grid)]
 
 	def celula_en(self, cords, contar = False):
 		cord_x_real = cords[0] + self.cols_extra[0]

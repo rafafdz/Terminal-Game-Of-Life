@@ -7,12 +7,7 @@ class Ventana:
 	def __init__(self, size, random, fps, tipo):
 		self.size_inicial = size
 		self.tick = 1 / fps
-
-		if str(random)[-1] == "%":
-			self.cantidad_random = int(int(random[:-1]) / 100)
-
-		else:
-			self.cantidad_random = random
+		self.cantidad_random = random
 
 		self.modo_limpiar = "colorama"
 		
@@ -43,14 +38,13 @@ class Ventana:
 
 	def limpiar(self):
 		if self.modo_limpiar == "colorama":
-			print("\033[1;1H")
+			print("\033[1;1H") 
 
 		elif self.modo_limpiar == "cls":
 			system("cls")
 
 		elif self.modo_limpiar == "espacio":
-			#print("\n" * 50)
-			pass
+			print("\n" * 50)
 
 	def key_press_check(self):
 		if msvcrt.kbhit():
@@ -90,7 +84,7 @@ class Ventana:
 				tiempo_siguiente += self.tick
 				self.limpiar()
 				self.imprimir()
-				print("Generacion", self.tablero.gen, "/ Vivas:", len(self.tablero.celulas_vivas))
+				#print("Generacion", self.tablero.gen, "/ Vivas:", len(self.tablero.celulas_vivas))
 				self.calcular_next_frame()
 
 			self.key_press_check()
