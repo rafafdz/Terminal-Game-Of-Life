@@ -1,25 +1,21 @@
 from time import perf_counter, sleep
-from os import system
-from tablero import *
-import msvcrt, colorama, consola
+from tablero import Tablero, Tablero_opt1
 
 class Ventana:
-	def __init__(self, size, random, fps, tipo):
+	def __init__(self, consola, size, random, fps, opti=True):
 		self.size_inicial = size
 		self.tick = 1 / fps
 		self.cantidad_random = random
-
-		self.modo_limpiar = "colorama"
+		self.consola = consola
 		
-		if tipo == "opti1":
+		if opti:
 			self.tablero = Tablero_opt1(self.size_inicial)
-		elif tipo == "basico":
+		else:
 			self.tablero = Tablero(size)
 
-		colorama.init()
-		consola.cambiar_letra_terminal()
-		consola.poner_titulo("Terminal Game of Life")
-		consola.resize_terminal(size + 2, size + 5)
+		self.consola.cambiar_letra_terminal()
+		self.consola.poner_titulo("Terminal Game of Life")
+		self.consola.resize_terminal(size + 2, size + 5)
 	
 	def init_tablero(self, modo, archivo = None, cantidad_archivo = 0):
 		self.tablero.rellenar()
@@ -34,21 +30,14 @@ class Ventana:
 		self.tablero.refresh()
 
 	def imprimir(self):
-		print(self.tablero)
-
+		self.consola.imprimir(self.tablero)
+  
 	def limpiar(self):
-		if self.modo_limpiar == "colorama":
-			print("\033[1;1H") 
-
-		elif self.modo_limpiar == "cls":
-			system("cls")
-
-		elif self.modo_limpiar == "espacio":
-			print("\n" * 50)
+		self.consola.limpiar()
 
 	def key_press_check(self):
-		if msvcrt.kbhit():
-			tecla = msvcrt.getch()
+		if self.consola.tecla_presionada():
+			tecla = self.consola.get_tecla()
 			if tecla == b"q":
 				self.salir = True
 
@@ -66,10 +55,11 @@ class Ventana:
 
 				self.tablero.mover_esquina(mapeo[tecla][0], mapeo[tecla][1])
 
-				self.limpiar()
+				consola.limpiar()
 				self.imprimir()
 
 	def mainloop(self):
+		# TODO: Que dependa del exterior
 		self.init_tablero("random")
 		self.salir = False
 		continuar = True

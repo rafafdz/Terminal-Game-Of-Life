@@ -1,6 +1,5 @@
-from celula import *
+from celula import Celula, Celula_opt1
 from random import sample
-import colorama
 
 class Tablero:
 	def __init__(self, grid):
@@ -190,7 +189,7 @@ class Tablero_opt1(Tablero):
 		else:
 			celula = self.matriz[cord_y_real][cord_x_real]
 
-			if contar == True:
+			if contar :
 				celula.contar()
 				if celula.veces_contada == 1:
 					self.contadas_alguna_vez.append(celula.pos)
@@ -277,7 +276,7 @@ class Tablero_opt1(Tablero):
 			
 		contador = 0
 		for booleano in vidas_lineas:
-			if booleano == True:
+			if booleano :
 				pos_min_x = self.matriz[0][0].pos[0]
 				pos_min_y = self.matriz[0][0].pos[1]
 				largo_fila = len(self.matriz[0])
