@@ -49,7 +49,7 @@ class ConsolaWin(ConsolaBase):
     def get_tecla(self):
         return msvcrt.getch()
 
-    def limpiar_cmd(self):
+    def limpiar_os_cmd(self):
         system("cls")
 
 

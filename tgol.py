@@ -8,7 +8,7 @@ else:
     from tgol.consola_unix import ConsolaUnix
     consola = ConsolaUnix()
 
-ventana = Ventana(consola, 30, 50 , 60)
+ventana = Ventana(consola, 50, 400 , 60)
 ventana.mainloop()
 
 if __name__ == "__main__":

@@ -5,14 +5,13 @@ from os import get_terminal_size
 
 class ConsolaBase(ABC):
     
-    def __init__(self, modo_limpiar="colorama"):
+    def __init__(self, modo_limpiar="escape"):
         self.modo_limpiar = modo_limpiar
-        
-        if modo_limpiar == "colorama":
+        if modo_limpiar == "escape":
             colorama.init()
-            self.limpiar = self.limpiar_colorama
+            self.limpiar = self.escape_seq
         elif modo_limpiar == "cls":
-            self.limpiar = self.limpiar_cmd
+            self.limpiar = self.limpiar_os_cmd
         elif modo_limpiar == "espacio":
             self.limpiar = self.limpiar_espacio
         
@@ -39,12 +38,11 @@ class ConsolaBase(ABC):
         pass
     
     @abstractmethod
-    def limpiar_cmd(self):
+    def limpiar_os_cmd(self):
         pass
     
-    def limpiar_colorama(self):
+    def escape_seq(self):
         print("\033[1;1H")
-        input()
         
     def limpiar_espacio(self):
         print("\n" * 50)
