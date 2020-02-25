@@ -6,7 +6,6 @@ from select import select
 from os import system
 from consola_base import ConsolaBase
 
-
 fd = sys.stdin.fileno()
 new_term = termios.tcgetattr(fd)
 old_term = termios.tcgetattr(fd)

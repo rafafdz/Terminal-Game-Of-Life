@@ -8,8 +8,6 @@ else:
     from tgol.consola_unix import ConsolaUnix
     consola = ConsolaUnix()
 
-ventana = Ventana(consola, 50, 400 , 60)
-ventana.mainloop()
-
 if __name__ == "__main__":
-    main()
+    ventana = Ventana(consola, 60, 1200, 10)
+    ventana.mainloop()
